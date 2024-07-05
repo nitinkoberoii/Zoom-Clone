@@ -12,11 +12,9 @@ class JitsiMeetMethods {
     try {
       FeatureFlag featureFlag = FeatureFlag();
       featureFlag.welcomePageEnabled = false;
+      featureFlag.inviteEnabled = false; // Disable invite option
       featureFlag.resolution = FeatureFlagVideoResolution
           .MD_RESOLUTION; // Limit video resolution to 360p
-      featureFlag.inviteEnabled = false;
-      featureFlag.meetingPasswordEnabled = false;
-      featureFlag.toolboxAlwaysVisible = false;
 
       var options = JitsiMeetingOptions(room: roomName)
         ..userDisplayName = _authMethods.user.displayName

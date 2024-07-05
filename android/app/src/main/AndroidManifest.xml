@@ -27,6 +27,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!-- Add the JitsiMeetPluginActivity configuration -->
+        <activity
+            android:name="com.gunschu.jitsi_meet.JitsiMeetPluginActivity"
+            android:theme="@style/AppTheme"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"
+            tools:replace="android:configChanges,android:theme">>
+        </activity>
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
