@@ -1,16 +1,16 @@
 # zoom_clone
 
-A new Flutter project.
+Zoom Clone using Flutter, Firebase and Jitsi-Meet.
+A full-stack project for learning Flutter App Development.
 
-## Getting Started
+The flutter packages that were installed in order to run the application are:
+- cloud_firestore: ^5.0.2
+- firebase_core: ^3.1.1
+- firebase_auth: ^5.1.1
+- google_sign_in: ^6.2.1
+- jitsi_meet_v1: ^5.0.0
+- intl: ^0.19.0
+All of these packages are available on pub.dev.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Inspired by the Flutter Projects Tutorial by Rivaan Ranawat, as a part of learning Full-Stack Flutter Development.
+The app is still under development...
