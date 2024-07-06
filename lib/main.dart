@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:zoom_clone/resources/auth_methods.dart';
 import 'package:zoom_clone/screens/home_screen.dart';
 import 'package:zoom_clone/screens/login_screen.dart';
+import 'package:zoom_clone/screens/settings_screen.dart';
 import 'package:zoom_clone/screens/video_call_screen.dart';
 import 'package:zoom_clone/utils/colors.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
         '/video-call': (context) => const VideoCallScreen(),
+        '/settings': (context) => const SettingsScreen(),
       },
       home: StreamBuilder(
         stream: AuthMethods().authChanges,
@@ -48,12 +51,18 @@ class MyApp extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-
           if (snapshot.hasData) {
             return const HomeScreen();
           }
-
-          return const LoginScreen();
+          return SplashScreenView(
+            duration: 3000,
+            text: "zoom",
+            textStyle: const TextStyle(
+                fontFamily: 'PlaywriteITTrad',
+                fontSize: 70,
+                fontWeight: FontWeight.bold),
+            navigateRoute: const LoginScreen(),
+          );
         },
       ),
     );

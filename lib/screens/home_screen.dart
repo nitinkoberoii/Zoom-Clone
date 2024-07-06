@@ -28,7 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
     const Text('Contacts'),
     Center(
       child: CustomButton(
-          text: 'Log Out', onPressed: () => AuthMethods().signOut()),
+          text: 'Log Out',
+          color: buttonColor,
+          onPressed: () => AuthMethods().signOut()),
     ),
   ];
 
