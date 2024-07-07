@@ -1,18 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zoom_clone/utils/colors.dart';
 
-class MeetingOption extends StatelessWidget {
+class MeetingOption extends StatefulWidget {
   final String text;
-  final bool isMute;
+  bool isON;
   final Function(bool) onChange;
 
-  const MeetingOption({
+  MeetingOption({
     super.key,
     required this.text,
-    required this.isMute,
+    this.isON = false,
     required this.onChange,
   });
 
+  @override
+  State<MeetingOption> createState() => _MeetingOptionState();
+}
+
+class _MeetingOptionState extends State<MeetingOption> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,19 +27,18 @@ class MeetingOption extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              text,
-              style: const TextStyle(fontSize: 16),
-            ),
+          Text(
+            widget.text,
+            style: const TextStyle(
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          Switch.adaptive(
-            value: isMute,
-            onChanged: onChange,
-            activeColor: Colors.white,
-            activeTrackColor: Colors.green,
-            inactiveThumbColor: Colors.white,
+          CupertinoSwitch(
+            value: widget.isON,
+            onChanged: (bool value) {
+              setState(() {
+                widget.isON = value;
+              });
+            },
           ),
         ],
       ),

@@ -108,12 +108,12 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           const SizedBox(height: 20),
           MeetingOption(
             text: 'Turn Off my Audio',
-            isMute: isAudioMuted,
+            isON: isAudioMuted,
             onChange: onAudioMuted,
           ),
           MeetingOption(
             text: 'Turn Off my Video',
-            isMute: isVideoMuted,
+            isON: isVideoMuted,
             onChange: onVideoMuted,
           ),
         ],

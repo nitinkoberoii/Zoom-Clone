@@ -1,9 +1,13 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:zoom_clone/utils/colors.dart';
+import 'package:zoom_clone/utils/random_name_list.dart';
 import 'package:zoom_clone/widgets/custom_button.dart';
 
-import '../widgets/custom_listTile.dart';
+import '../widgets/meeting_options.dart';
 
 class JoinWithoutSignin extends StatefulWidget {
   const JoinWithoutSignin({super.key});
@@ -16,10 +20,36 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
   late TextEditingController meetingIDController;
   late TextEditingController nameController;
 
+  bool isAudioMuted = false;
+  bool isVideoMuted = false;
+
+  CupertinoAlertDialog showAlertDialogBox(String text) {
+    return CupertinoAlertDialog(
+      title: Text(
+        text,
+        style: const TextStyle(fontSize: 18, color: Colors.white),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text(
+            'Ok',
+            style: TextStyle(fontSize: 16, color: buttonColor),
+          ),
+        )
+      ],
+    );
+  }
+
+  String _generateRandomName() {
+    final random = Random();
+    return namesList[random.nextInt(namesList.length)];
+  }
+
   @override
   void initState() {
     meetingIDController = TextEditingController();
-    nameController = TextEditingController();
+    nameController = TextEditingController(text: _generateRandomName());
     super.initState();
   }
 
@@ -131,7 +161,11 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
             const SizedBox(height: 20),
             CustomButton(
                 text: 'Join',
-                onPressed: () {},
+                onPressed: () => showCupertinoDialog(
+                      context: context,
+                      builder: (context) => showAlertDialogBox(
+                          'Unfortunately for you, this function doesn\'t work 😔. Sign In to join a meeting'),
+                    ),
                 color: secondaryBackgroundColor),
             const SizedBox(height: 10),
             const Padding(
@@ -165,9 +199,11 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                    child: CustomListTile(
-                        primaryText: 'Don\'t connect to audio',
-                        secondaryText: ''),
+                    child: MeetingOption(
+                      text: 'Turn Off my Audio',
+                      isON: isAudioMuted,
+                      onChange: onAudioMuted,
+                    ),
                   ),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -175,8 +211,11 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                    child: CustomListTile(
-                        primaryText: 'Turn off my video', secondaryText: ''),
+                    child: MeetingOption(
+                      text: 'Turn Off my Video',
+                      isON: isVideoMuted,
+                      onChange: onVideoMuted,
+                    ),
                   ),
                 ],
               ),
@@ -185,5 +224,17 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
         ),
       ),
     );
+  }
+
+  onAudioMuted(bool value) {
+    setState(() {
+      isAudioMuted = value;
+    });
+  }
+
+  onVideoMuted(bool value) {
+    setState(() {
+      isVideoMuted = value;
+    });
   }
 }
