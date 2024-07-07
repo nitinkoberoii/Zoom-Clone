@@ -21,9 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: buttonColor,
         leading: GestureDetector(
-          onTap: () {
-            Navigator.pushNamed((context), '/settings');
-          },
+          onTap: () => Navigator.pushNamed((context), '/settings'),
           child: const Icon(Icons.settings_outlined),
         ),
       ),
@@ -63,9 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomButton(
-                    text: 'Join a Meeting',
-                    color: buttonColor,
-                    onPressed: () {}),
+                  text: 'Join a Meeting',
+                  color: buttonColor,
+                  onPressed: () => Navigator.pushNamed(
+                      (context), '/join-meeting-without-signIn'),
+                ),
                 const SizedBox(height: 10),
                 CustomButton(
                     text: 'Sign Up',

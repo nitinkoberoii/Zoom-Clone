@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:zoom_clone/resources/auth_methods.dart';
 import 'package:zoom_clone/screens/home_screen.dart';
+import 'package:zoom_clone/screens/join_without_signIn.dart';
 import 'package:zoom_clone/screens/login_screen.dart';
 import 'package:zoom_clone/screens/settings_screen.dart';
 import 'package:zoom_clone/screens/video_call_screen.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
         '/video-call': (context) => const VideoCallScreen(),
+        '/join-meeting-without-signIn': (context) => const JoinWithoutSignin(),
         '/settings': (context) => const SettingsScreen(),
       },
       home: StreamBuilder(
