@@ -88,7 +88,7 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
                       BorderSide(color: Color.fromRGBO(70, 70, 70, 1.0)),
                 ),
               ),
-              height: 40,
+              height: 50,
               child: TextField(
                 controller: meetingIDController,
                 cursorColor: Colors.lightBlue,
@@ -123,7 +123,7 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
                       BorderSide(color: Color.fromRGBO(70, 70, 70, 1.0)),
                 ),
               ),
-              height: 40,
+              height: 50,
               child: TextField(
                 controller: nameController,
                 cursorColor: Colors.lightBlue,
@@ -144,6 +144,7 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
               child: RichText(
                 text: const TextSpan(
                   text: 'By clicking "Join", you agree to our ',
+                  style: TextStyle(color: Colors.grey),
                   children: [
                     TextSpan(
                       text: 'Terms of Service ',
@@ -171,7 +172,9 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
-                  'If you received an invitation link, tap on the link to join the meeting'),
+                'If you received an invitation link, tap on the link to join the meeting',
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
             const SizedBox(height: 20),
             const Padding(

@@ -68,19 +68,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomButton(
-                    text: 'Sign Up',
-                    color: secondaryBackgroundColor,
-                    onPressed: () {}),
+                  text: 'Sign Up',
+                  color: secondaryBackgroundColor,
+                  onPressed: () => Navigator.pushNamed((context), '/sign-up/#'),
+                ),
                 const SizedBox(height: 10),
                 CustomButton(
-                    text: 'Sign In',
-                    color: secondaryBackgroundColor,
-                    onPressed: () async {
-                      bool res = await _authMethods.signInWithGoogle(context);
-                      if (res) {
-                        Navigator.pushNamed(context, '/home');
-                      }
-                    }),
+                  text: 'Sign In',
+                  color: secondaryBackgroundColor,
+                  onPressed: () => Navigator.pushNamed(context, '/sign-in'),
+                ),
               ],
             ),
           ),
