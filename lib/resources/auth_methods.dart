@@ -77,7 +77,7 @@ class AuthMethods {
     String password = passwordController.text.trim();
 
     if (!isEmailValid(emailAddress)) {
-      showSnackBar(context, 'The email is badly formatted');
+      showSnackBar(context, 'Wrong Email');
       return res;
     }
 
@@ -105,6 +105,56 @@ class AuthMethods {
         showSnackBar(context, 'The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         showSnackBar(context, 'The account already exists for that email.');
+      } else {
+        showSnackBar(context, e.message!);
+      }
+      res = false;
+    } catch (e) {
+      print(e);
+      res = false;
+    }
+    return res;
+  }
+
+  // SignIn with Email/Password
+  Future<bool> signInWithEmailAndPassword(
+      BuildContext context,
+      TextEditingController emailAddressController,
+      TextEditingController passwordController) async {
+    bool res = false;
+
+    String emailAddress = emailAddressController.text.trim();
+    String password = passwordController.text.trim();
+
+    if (!isEmailValid(emailAddress)) {
+      showSnackBar(context, 'Wrong Email');
+      return res;
+    }
+
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+
+      User? user = userCredential.user;
+
+      if (user != null) {
+        if (userCredential.additionalUserInfo!.isNewUser) {
+          await _firestore.collection('users').doc(user.uid).set({
+            'username': user.displayName,
+            'uid': user.uid,
+            'profilePhoto': user.photoURL,
+            'password': hashPassword(password),
+          });
+        }
+        res = true;
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        showSnackBar(context, 'No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        showSnackBar(context, 'Wrong password provided for that user.');
       } else {
         showSnackBar(context, e.message!);
       }

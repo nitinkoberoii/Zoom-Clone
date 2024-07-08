@@ -15,6 +15,8 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final AuthMethods _authMethods = AuthMethods();
+  final TextEditingController emailAddress = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +73,15 @@ class _SignInScreenState extends State<SignInScreen> {
                 horizontal: BorderSide(color: Color.fromRGBO(70, 70, 70, 1.0)),
               ),
             ),
-            child: const Column(
+            child: Column(
               children: [
-                const TextField(
+                TextField(
+                  controller: emailAddress,
                   cursorColor: Colors.lightBlue,
                   maxLines: 1,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     fillColor: secondaryBackgroundColor,
                     filled: true,
                     border: InputBorder.none,
@@ -90,11 +93,12 @@ class _SignInScreenState extends State<SignInScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Divider(thickness: 2, height: 0),
                 ),
-                const TextField(
+                TextField(
+                  controller: password,
                   cursorColor: Colors.lightBlue,
                   maxLines: 1,
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     fillColor: secondaryBackgroundColor,
                     filled: true,
                     border: InputBorder.none,
@@ -108,7 +112,13 @@ class _SignInScreenState extends State<SignInScreen> {
           const SizedBox(height: 30),
           CustomButton(
             text: 'Sign In',
-            onPressed: () {},
+            onPressed: () async {
+              bool res = await _authMethods.signInWithEmailAndPassword(
+                  context, emailAddress, password);
+              if (res) {
+                Navigator.pushNamed(context, '/home');
+              }
+            },
             color: secondaryBackgroundColor,
           ),
           const SizedBox(height: 15),
