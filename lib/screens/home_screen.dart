@@ -25,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> pages = [
     MeetingScreen(),
     const HistoryMeetingScreen(),
-    const Text('Contacts'),
+    const Text('Mail'),
+    const Text('Calendar'),
     Center(
       child: CustomButton(
           text: 'Log Out',
@@ -37,12 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        backgroundColor: backgroundColor,
-        title: const Text('Meet and Chat'),
-      ),
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: footerColor,
@@ -54,13 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
         unselectedFontSize: 14,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.comment_bank), label: 'Meet and Chat'),
+              icon: Icon(Icons.videocam), label: 'Meetings'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.lock_clock), label: 'Meetings'),
+              icon: Icon(Icons.lock_clock), label: 'History'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), label: 'Contacts'),
+              icon: Icon(Icons.mail_outline_rounded), label: 'Mail'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined), label: 'Settings'),
+              icon: Icon(Icons.calendar_today_outlined), label: 'Calendar'),
+          BottomNavigationBarItem(icon: Icon(Icons.more_horiz), label: 'More'),
         ],
       ),
     );

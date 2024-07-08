@@ -165,7 +165,7 @@ class _JoinWithoutSigninState extends State<JoinWithoutSignin> {
                 onPressed: () => showCupertinoDialog(
                       context: context,
                       builder: (context) => showAlertDialogBox(
-                          'Unfortunately for you, this function doesn\'t work 😔. Sign In to join a meeting'),
+                          'Unfortunately for you using Jitsi_Meet, this function doesn\'t work 😔. Sign In to join a meeting'),
                     ),
                 color: secondaryBackgroundColor),
             const SizedBox(height: 10),

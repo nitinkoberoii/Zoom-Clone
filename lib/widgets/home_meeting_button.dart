@@ -5,11 +5,13 @@ class HomeMeetingButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
   final String text;
+  final Color color;
   const HomeMeetingButton({
     super.key,
     required this.onPressed,
     required this.icon,
     required this.text,
+    required this.color,
   });
 
   @override
@@ -22,8 +24,8 @@ class HomeMeetingButton extends StatelessWidget {
             height: 60,
             width: 60,
             decoration: BoxDecoration(
-              color: buttonColor,
-              borderRadius: BorderRadius.circular(16),
+              color: color,
+              borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
                   blurRadius: 10,

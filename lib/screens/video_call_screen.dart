@@ -5,6 +5,7 @@ import 'package:zoom_clone/resources/auth_methods.dart';
 import 'package:zoom_clone/resources/jitsi_meet_methods.dart';
 import 'package:zoom_clone/utils/colors.dart';
 
+import '../widgets/custom_button.dart';
 import '../widgets/meeting_options.dart';
 
 class VideoCallScreen extends StatefulWidget {
@@ -52,6 +53,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        toolbarHeight: 40,
         backgroundColor: backgroundColor,
         centerTitle: true,
         leading: GestureDetector(
@@ -59,14 +61,21 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           child: const Icon(Icons.arrow_back_ios_new),
         ),
         title: const Text(
-          'Join a Meeting',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          'Join',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
         children: [
-          SizedBox(
-            height: 60,
+          const SizedBox(height: 5),
+          Container(
+            decoration: const BoxDecoration(
+              color: secondaryBackgroundColor,
+              border: Border.symmetric(
+                horizontal: BorderSide(color: Color.fromRGBO(70, 70, 70, 1.0)),
+              ),
+            ),
+            height: 50,
             child: TextField(
               controller: meetingIDController,
               maxLines: 1,
@@ -80,8 +89,15 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   contentPadding: EdgeInsets.fromLTRB(16, 8, 0, 0)),
             ),
           ),
-          SizedBox(
-            height: 60,
+          const SizedBox(height: 10),
+          Container(
+            decoration: const BoxDecoration(
+              color: secondaryBackgroundColor,
+              border: Border.symmetric(
+                horizontal: BorderSide(color: Color.fromRGBO(70, 70, 70, 1.0)),
+              ),
+            ),
+            height: 50,
             child: TextField(
               controller: nameController,
               maxLines: 1,
@@ -94,27 +110,65 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   contentPadding: EdgeInsets.fromLTRB(16, 8, 0, 0)),
             ),
           ),
-          const SizedBox(height: 20),
-          InkWell(
-            onTap: _joinMeeting,
-            child: const Padding(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                'Join',
-                style: TextStyle(fontSize: 16),
+          const SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: RichText(
+              text: const TextSpan(
+                text: 'By clicking "Join", you agree to our ',
+                style: TextStyle(color: Colors.grey),
+                children: [
+                  TextSpan(
+                    text: 'Terms of Service ',
+                    style: TextStyle(color: buttonColor),
+                  ),
+                  TextSpan(text: 'and '),
+                  TextSpan(
+                    text: 'Privacy Statement',
+                    style: TextStyle(color: buttonColor),
+                  ),
+                ],
               ),
             ),
           ),
-          const SizedBox(height: 20),
-          MeetingOption(
-            text: 'Turn Off my Audio',
-            isON: isAudioMuted,
-            onChange: onAudioMuted,
+          const SizedBox(height: 10),
+          CustomButton(
+            text: 'Join',
+            onPressed: _joinMeeting,
+            color: secondaryBackgroundColor,
           ),
-          MeetingOption(
-            text: 'Turn Off my Video',
-            isON: isVideoMuted,
-            onChange: onVideoMuted,
+          const SizedBox(height: 20),
+          Container(
+            decoration: const BoxDecoration(
+              color: secondaryBackgroundColor,
+              border: Border.symmetric(
+                horizontal: BorderSide(color: Color.fromRGBO(70, 70, 70, 1.0)),
+              ),
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                  child: MeetingOption(
+                    text: 'Turn Off my Audio',
+                    isON: isAudioMuted,
+                    onChange: onAudioMuted,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Divider(thickness: 2, height: 0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                  child: MeetingOption(
+                    text: 'Turn Off my Video',
+                    isON: isVideoMuted,
+                    onChange: onVideoMuted,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

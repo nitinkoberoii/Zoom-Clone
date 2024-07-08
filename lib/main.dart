@@ -21,10 +21,10 @@ void main() async {
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: const FirebaseOptions(
-            apiKey: '',
-            appId: '',
-            messagingSenderId: '',
-            projectId: '',
+            apiKey: 'AIzaSyBQvQDCdKhgkosISGWY0SZPBZF8HDSXVuI',
+            appId: '1:224328311701:android:129d3911e294f5ed660c9c',
+            messagingSenderId: '224328311701',
+            projectId: 'zoom-clone-ea91d',
           ),
         )
       : await Firebase.initializeApp();
