@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:zoom_clone/resources/auth_methods.dart';
+import 'package:zoom_clone/screens/forgot_password_screen.dart';
 import 'package:zoom_clone/screens/home_screen.dart';
 import 'package:zoom_clone/screens/join_without_signIn.dart';
 import 'package:zoom_clone/screens/login_screen.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         '/sign-up/#': (context) => const SignUpScreen1(),
         '/sign-up/auth': (context) => const SignUpScreen2(),
         '/sign-in': (context) => const SignInScreen(),
+        '/forgot-password': (context) => const ForgotPasswordScreen(),
       },
       home: StreamBuilder(
         stream: AuthMethods().authChanges,

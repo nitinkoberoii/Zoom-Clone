@@ -4,8 +4,44 @@ import 'package:flutter/material.dart';
 import '../../utils/colors.dart';
 import '../../widgets/custom_button.dart';
 
-class SignUpScreen1 extends StatelessWidget {
+class SignUpScreen1 extends StatefulWidget {
   const SignUpScreen1({super.key});
+
+  @override
+  State<SignUpScreen1> createState() => _SignUpScreen1State();
+}
+
+class _SignUpScreen1State extends State<SignUpScreen1> {
+  final TextEditingController _birthYearController = TextEditingController();
+  bool _isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _birthYearController.addListener(_validateInput);
+  }
+
+  @override
+  void dispose() {
+    _birthYearController.removeListener(_validateInput);
+    _birthYearController.dispose();
+    super.dispose();
+  }
+
+  void _validateInput() {
+    setState(() {
+      if (_birthYearController.text.isNotEmpty &&
+          _birthYearController.text.length == 4) {
+        _isButtonEnabled = true;
+      }
+    });
+  }
+
+  void _onContinue() {
+    if (_isButtonEnabled) {
+      Navigator.pushNamed(context, '/sign-up/auth');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +81,13 @@ class SignUpScreen1 extends StatelessWidget {
               ),
             ),
             height: 50,
-            child: const TextField(
+            child: TextField(
+              controller: _birthYearController,
               cursorColor: Colors.lightBlue,
               maxLines: 1,
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Birth year',
                 contentPadding: EdgeInsets.fromLTRB(16, 8, 0, 8),
@@ -65,9 +102,10 @@ class SignUpScreen1 extends StatelessWidget {
             ),
           ),
           CustomButton(
-              text: 'Continue',
-              onPressed: () => Navigator.pushNamed((context), '/sign-up/auth'),
-              color: secondaryBackgroundColor),
+            text: 'Continue',
+            onPressed: _isButtonEnabled ? _onContinue : () {},
+            color: _isButtonEnabled ? buttonColor : secondaryBackgroundColor,
+          ),
         ],
       ),
     );

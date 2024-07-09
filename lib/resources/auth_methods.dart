@@ -79,7 +79,7 @@ class AuthMethods {
     String password = passwordController.text.trim();
 
     if (!isEmailValid(emailAddress)) {
-      showSnackBar(context, 'Wrong Email');
+      showSnackBar(context, 'Invalid Email');
       return res;
     }
 
@@ -157,6 +157,35 @@ class AuthMethods {
         showSnackBar(context, 'No user found for that email.');
       } else if (e.code == 'wrong-password') {
         showSnackBar(context, 'Wrong password provided for that user.');
+      } else {
+        showSnackBar(context, e.message!);
+      }
+      res = false;
+    } catch (e) {
+      print(e);
+      res = false;
+    }
+    return res;
+  }
+
+  // forgets password
+  Future<bool> resetPassword(BuildContext context,
+      TextEditingController emailAddressController) async {
+    bool res = false;
+    String emailAddress = emailAddressController.text.trim();
+
+    if (!isEmailValid(emailAddress)) {
+      showSnackBar(context, 'Invalid Email');
+      return res;
+    }
+
+    try {
+      await _auth.sendPasswordResetEmail(email: emailAddress);
+      showSnackBar(context, 'Password reset email sent.');
+      res = true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        showSnackBar(context, 'No user found for that email.');
       } else {
         showSnackBar(context, e.message!);
       }

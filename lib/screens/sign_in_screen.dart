@@ -18,6 +18,41 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailAddress = TextEditingController();
   final TextEditingController password = TextEditingController();
 
+  bool _isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    emailAddress.addListener(_validateInput);
+    password.addListener(_validateInput);
+  }
+
+  @override
+  void dispose() {
+    emailAddress.removeListener(_validateInput);
+    password.removeListener(_validateInput);
+    emailAddress.dispose();
+    password.dispose();
+    super.dispose();
+  }
+
+  void _validateInput() {
+    setState(() {
+      _isButtonEnabled =
+          emailAddress.text.isNotEmpty && password.text.isNotEmpty;
+    });
+  }
+
+  void onPressed() async {
+    if (_isButtonEnabled) {
+      bool res = await _authMethods.signInWithEmailAndPassword(
+          context, emailAddress, password);
+      if (res) {
+        Navigator.pushNamed(context, '/home');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     CupertinoAlertDialog showAlertDialogBox(String text) {
@@ -52,145 +87,142 @@ class _SignInScreenState extends State<SignInScreen> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 14, 0, 8),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Enter your email address',
-                style: TextStyle(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 14, 0, 8),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Enter your email address',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border.symmetric(
+                  horizontal:
+                      BorderSide(color: Color.fromRGBO(70, 70, 70, 1.0)),
+                ),
+              ),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: emailAddress,
+                    cursorColor: Colors.lightBlue,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      fillColor: secondaryBackgroundColor,
+                      filled: true,
+                      border: InputBorder.none,
+                      hintText: 'Email',
+                      contentPadding: EdgeInsets.fromLTRB(16, 8, 0, 8),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Divider(thickness: 2, height: 0),
+                  ),
+                  TextField(
+                    controller: password,
+                    cursorColor: Colors.lightBlue,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                      fillColor: secondaryBackgroundColor,
+                      filled: true,
+                      border: InputBorder.none,
+                      hintText: 'Password',
+                      contentPadding: EdgeInsets.fromLTRB(16, 8, 0, 8),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            CustomButton(
+              text: 'Sign In',
+              onPressed: _isButtonEnabled ? onPressed : () {},
+              color: _isButtonEnabled ? buttonColor : secondaryBackgroundColor,
+            ),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/forgot-password'),
+                  child: const Text(
+                    "Forgot Password?",
+                    style: TextStyle(color: Colors.blue, fontSize: 14),
+                  ),
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 40, 0, 8),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Other sign in methods',
+                  style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              border: Border.symmetric(
-                horizontal: BorderSide(color: Color.fromRGBO(70, 70, 70, 1.0)),
-              ),
-            ),
-            child: Column(
-              children: [
-                TextField(
-                  controller: emailAddress,
-                  cursorColor: Colors.lightBlue,
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    fillColor: secondaryBackgroundColor,
-                    filled: true,
-                    border: InputBorder.none,
-                    hintText: 'Email',
-                    contentPadding: EdgeInsets.fromLTRB(16, 8, 0, 8),
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(165, 164, 199, 1.0),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Divider(thickness: 2, height: 0),
-                ),
-                TextField(
-                  controller: password,
-                  cursorColor: Colors.lightBlue,
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  decoration: const InputDecoration(
-                    fillColor: secondaryBackgroundColor,
-                    filled: true,
-                    border: InputBorder.none,
-                    hintText: 'Password',
-                    contentPadding: EdgeInsets.fromLTRB(16, 8, 0, 8),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
-          CustomButton(
-            text: 'Sign In',
-            onPressed: () async {
-              bool res = await _authMethods.signInWithEmailAndPassword(
-                  context, emailAddress, password);
-              if (res) {
-                Navigator.pushNamed(context, '/home');
-              }
-            },
-            color: secondaryBackgroundColor,
-          ),
-          const SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: GestureDetector(
-                onTap: () {},
-                child: const Text(
-                  "Forgot Password?",
-                  style: TextStyle(color: Colors.blue, fontSize: 14),
-                ),
               ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 40, 0, 8),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Other sign in methods',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(165, 164, 199, 1.0),
-                ),
+            const SizedBox(height: 20),
+            CustomIconButton(
+              iconPath: 'assets/svgs/google.svg',
+              text: 'Google',
+              onTap: () async {
+                bool res = await _authMethods.signInWithGoogle(context);
+                if (res) {
+                  Navigator.pushNamed(context, '/home');
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+            CustomIconButton(
+              iconPath: 'assets/svgs/apple.svg',
+              text: 'Apple',
+              onTap: () => showCupertinoDialog(
+                context: context,
+                builder: (context) => showAlertDialogBox(
+                    'At the moment, the preferable solution is blocked by some issue. 😔 \nVisit this site for more info: https://firebase.flutter.dev/docs/auth/social'),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          CustomIconButton(
-            iconPath: 'assets/svgs/google.svg',
-            text: 'Google',
-            onTap: () async {
-              bool res = await _authMethods.signInWithGoogle(context);
-              if (res) {
-                Navigator.pushNamed(context, '/home');
-              }
-            },
-          ),
-          const SizedBox(height: 10),
-          CustomIconButton(
-            iconPath: 'assets/svgs/apple.svg',
-            text: 'Apple',
-            onTap: () => showCupertinoDialog(
-              context: context,
-              builder: (context) => showAlertDialogBox(
-                  'At the moment, the preferable solution is blocked by some issue. 😔 \nVisit this site for more info: https://firebase.flutter.dev/docs/auth/social'),
+            const SizedBox(height: 10),
+            CustomIconButton(
+              iconPath: 'assets/svgs/facebook.svg',
+              text: 'Facebook',
+              onTap: () => showCupertinoDialog(
+                context: context,
+                builder: (context) => showAlertDialogBox(
+                    'As I don\'t have an FB account, I couldn\'t create this feature. 😔 \nTo add this functionality, Visit this site for more info: https://firebase.flutter.dev/docs/auth/social'),
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          CustomIconButton(
-            iconPath: 'assets/svgs/facebook.svg',
-            text: 'Facebook',
-            onTap: () => showCupertinoDialog(
-              context: context,
-              builder: (context) => showAlertDialogBox(
-                  'As I don\'t have an FB account, I couldn\'t create this feature. 😔 \nTo add this functionality, Visit this site for more info: https://firebase.flutter.dev/docs/auth/social'),
+            const SizedBox(height: 10),
+            CustomIconButton(
+              iconPath: 'assets/svgs/key.svg',
+              text: 'SSO',
+              onTap: () => showCupertinoDialog(
+                context: context,
+                builder: (context) => showAlertDialogBox(
+                    'To continue with SSO, you will require a company domain (e.g., "<company_name>.zoom.us")'),
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          CustomIconButton(
-            iconPath: 'assets/svgs/key.svg',
-            text: 'SSO',
-            onTap: () => showCupertinoDialog(
-              context: context,
-              builder: (context) => showAlertDialogBox(
-                  'To continue with SSO, you will require a company domain (e.g., "<company_name>.zoom.us")'),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
