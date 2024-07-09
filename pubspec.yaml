@@ -39,6 +39,7 @@ dependencies:
   intl: ^0.19.0
   splash_screen_view: ^3.0.0
   flutter_svg:
+  table_calendar: ^3.1.2
 
 
 

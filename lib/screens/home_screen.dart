@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:zoom_clone/resources/auth_methods.dart';
 import 'package:zoom_clone/screens/history_meeting_screen.dart';
 import 'package:zoom_clone/screens/meeting_screen.dart';
+import 'package:zoom_clone/screens/more_screen.dart';
 import 'package:zoom_clone/utils/colors.dart';
 import 'package:zoom_clone/widgets/custom_button.dart';
 
 import '../widgets/home_meeting_button.dart';
+import 'calendar_screen.dart';
+import 'mail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,14 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> pages = [
     MeetingScreen(),
     const HistoryMeetingScreen(),
-    const Text('Mail'),
-    const Text('Calendar'),
-    Center(
-      child: CustomButton(
-          text: 'Log Out',
-          color: buttonColor,
-          onPressed: () => AuthMethods().signOut()),
-    ),
+    const MailScreen(),
+    const CalendarScreen(),
+    const MoreScreen(),
   ];
 
   @override

@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:zoom_clone/utils/utils.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+
+import '../screens/login_screen.dart';
 
 String hashPassword(String password) {
   final bytes = utf8.encode(password);
@@ -166,9 +168,13 @@ class AuthMethods {
     return res;
   }
 
-  void signOut() async {
+  void signOut(BuildContext context) async {
     try {
       _auth.signOut();
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (route) => false,
+      );
     } catch (e) {
       print(e);
     }
