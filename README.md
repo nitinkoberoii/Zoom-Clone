@@ -25,4 +25,12 @@ App Screenshots:-
 -
   ![image](https://github.com/user-attachments/assets/fc0f6c13-0a3d-4a8c-a2c9-bd2f24ad13b5)
 
+-
+   ![image](https://github.com/user-attachments/assets/7c1e75e1-5026-4d96-8842-6f03f8c7dbc1)
+
+-
+  ![image](https://github.com/user-attachments/assets/2e9159c1-d710-4840-be16-0c5543f0949d)
+
+
+
 
