@@ -15,8 +15,6 @@ App Screenshots:-
 
 -
   ![image](https://github.com/user-attachments/assets/b1e86f77-e8ea-420e-b37b-3073f5ba71c9)
-
--
   ![image](https://github.com/user-attachments/assets/382182e6-db02-40af-b0e5-92389dbd9f89)
 
 -
